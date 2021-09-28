@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Control</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <h2>Notification</h2>
+        <p id="notification">No notification</p>
+    </div>
+    <div>
+        <h2>Light</h2>
+        <p>Brightness: <span id="light_brightness"></span></p>
+        <p>Mode: <span id="light_mode"></span></p>
+        <div>
+            <button onclick="turnOnLight()">ON</button>
+            <button onclick="turnOffLight()">OFF</button>
+            <button onclick="brightenLight()">BRIGHTEN</button>
+            <button onclick="dimLight()">DIM</button>
+        </div>
+    </div>
+
+    <div>
+        <h2>Air Conditioner</h2>
+        <p>Temperature: <span id="aircon_brightness"></span></p>
+        <p>Mode: <span id="aircon_mode"></span></p>
+        <div>
+            <button>HEATER</button>
+            <button>COOLER</button>
+            <button>INC TEMP</button>
+            <button>DEC TEMP</button>
+        </div>
+    </div>
+</body>
+<script>
+    console.log("Connecting to server...");
+
+    var light_brightness = document.getElementById("light_brightness");
+    var light_mode = document.getElementById("light_mode");
+    var aircon_brightness = document.getElementById("aircon_brightness");
+    var aircon_mode = document.getElementById("aircon_mode");
+
+    //Initialize
+    light_brightness.innerHTML = "-";
+    light_mode.innerHTML = "-";
+    aircon_brightness.innerHTML = "-";
+    aircon_mode.innerHTML = "-";
+    var brightness = 0;
+
+    //Add click event handlers for buttons
+    function turnOnLight() {
+        console.log("turnOnLight");
+        light_mode.innerHTML = "ON";
+    }
+
+    function turnOffLight() {
+        console.log("turnOffLight");
+        light_mode.innerHTML = "OFF";
+    }
+
+    function brightenLight() {
+        console.log("brightenLight");
+        brightness = brightness + 1;
+        light_brightness.innerHTML = brightness;
+    }
+
+    function dimLight() {
+        console.log("dimLight");
+        brightness = brightness - 1;
+        light_brightness.innerHTML = brightness;
+    }
+</script>
+
+</html>
