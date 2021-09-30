@@ -1,2 +1,2 @@
 # Home Control
-Control home devices from mobile phone or web.
+Control home devices with Raspberry Pi from mobile phone or web.
