@@ -28,8 +28,22 @@ namespace HomeControl.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-
             services.AddControllers();
+
+            //Register gRPC clients
+            services.AddGrpcClient<Light.LightClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:5001");
+            });
+            services.AddGrpcClient<AirConditioner.AirConditionerClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:5001");
+            });
+            services.AddGrpcClient<EnvironmentSensor.EnvironmentSensorClient>(o =>
+            {
+                o.Address = new Uri("https://localhost:5001");
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HomeControl.Api", Version = "v1" });
