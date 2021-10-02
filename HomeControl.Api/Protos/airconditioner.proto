@@ -9,7 +9,7 @@ package greet;
 // The air conditioner control service definition.
 service AirConditioner {
   // Get current state
-  rpc GetStatus (google.protobuf.Empty) returns (AirConditionerReply);
+  rpc GetState (google.protobuf.Empty) returns (AirConditionerReply);
 
   // Turn on heater
   rpc TurnOnHeater (google.protobuf.Empty) returns (AirConditionerReply);

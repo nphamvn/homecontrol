@@ -9,7 +9,7 @@ package greet;
 // The light control service definition.
 service Light {
   // Get current state
-  rpc GetStatus (google.protobuf.Empty) returns (LightReply);
+  rpc GetState (google.protobuf.Empty) returns (LightReply);
 
   // Turn on light
   rpc TurnOnLight (google.protobuf.Empty) returns (LightReply);
