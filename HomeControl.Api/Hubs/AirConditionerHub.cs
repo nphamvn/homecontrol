@@ -1,15 +1,18 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 
 namespace HomeControl.Api.Hubs
 {
     public class AirConditionerHub : Hub
     {
         private readonly AirConditioner.AirConditionerClient _client;
+        private readonly ILogger<AirConditionerHub> _logger;
 
-        public AirConditionerHub(AirConditioner.AirConditionerClient client)
+        public AirConditionerHub(AirConditioner.AirConditionerClient client, ILogger<AirConditionerHub> logger)
         {
             _client = client;
+            _logger = logger;
         }
         public async Task TurnOnCooler()
         {
