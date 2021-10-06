@@ -26,6 +26,13 @@ namespace HomeControl.Api.Hubs
             _logger = logger;
             _bus = bus;
         }
+
+        public override async Task OnConnectedAsync()
+        {
+            _logger.LogInformation("Client connected");
+            await Clients.All.SendAsync("Broadcast", "Connected");
+        }
+
         //Environment Sensor
         public async Task GetEnvironmentSensorData()
         {
@@ -50,7 +57,13 @@ namespace HomeControl.Api.Hubs
         }
         public async Task TurnOnLight()
         {
-            var reply = await _lightClient.TurnOnLightAsync(new Google.Protobuf.WellKnownTypes.Empty());
+            _logger.LogInformation(nameof(TurnOnLight));
+            //var reply = await _lightClient.TurnOnLightAsync(new Google.Protobuf.WellKnownTypes.Empty());
+            var reply = new LightReply
+            {
+                Mode = "ON",
+                Brightness = 10
+            };
             var message = new LightStateChanged
             {
                 Mode = reply.Mode,

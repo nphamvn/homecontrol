@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using HomeControl.Api.EventHandlers;
+using HomeControl.Api.DenpendencyInjections;
 
 namespace HomeControl.Api
 {
@@ -30,19 +32,19 @@ namespace HomeControl.Api
             services.AddSignalR();
             services.AddControllers();
 
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200");
+            }));
+
             //Register gRPC clients
-            services.AddGrpcClient<Light.LightClient>(o =>
-            {
-                o.Address = new Uri("https://localhost:5001");
-            });
-            services.AddGrpcClient<AirConditioner.AirConditionerClient>(o =>
-            {
-                o.Address = new Uri("https://localhost:5001");
-            });
-            services.AddGrpcClient<EnvironmentSensor.EnvironmentSensorClient>(o =>
-            {
-                o.Address = new Uri("https://localhost:5001");
-            });
+            services.AddGrpcClients();
+
+            services.AddMassTransit();
 
             services.AddSwaggerGen(c =>
             {
@@ -65,6 +67,8 @@ namespace HomeControl.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
