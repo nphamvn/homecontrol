@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using HomeControl.Api.Hubs;
+using HomeControl.Api.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.SignalR;
 
 namespace HomeControl.Api.EventHandlers
 {
-    public class AirConditionerStateChangedEventHandler//: Hanlder (MessagePub, EventBus, Mediator, MassTransit)
+    public class AirConditionerStateChangedEventHandler : IConsumer<AirConditionerStateChanged>
     {
         private readonly IHubContext<DevicesControllerHub> _hubContext;
 
@@ -13,8 +15,9 @@ namespace HomeControl.Api.EventHandlers
             _hubContext = hubContext;
         }
 
-        public async Task OnHandled(object data)
+        public async Task Consume(ConsumeContext<AirConditionerStateChanged> context)
         {
+            await _hubContext.Clients.All.SendAsync(nameof(AirConditionerStateChanged), context.Message);
         }
     }
 }

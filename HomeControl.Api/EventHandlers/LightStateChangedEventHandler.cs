@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using HomeControl.Api.Hubs;
+using HomeControl.Api.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.SignalR;
 
 namespace HomeControl.Api.EventHandlers
 {
-    public class LightStateChangedEventHandler//: Hanlder (MessagePub, EventBus, Mediator, MassTransit)
+    public class LightStateChangedEventHandler : IConsumer<LightStateChanged>
     {
         private readonly IHubContext<DevicesControllerHub> _hubContext;
 
@@ -13,9 +15,9 @@ namespace HomeControl.Api.EventHandlers
             _hubContext = hubContext;
         }
 
-        public async Task OnHandled(object data)
+        public async Task Consume(ConsumeContext<LightStateChanged> context)
         {
-            //Notify to other client
+            await _hubContext.Clients.All.SendAsync(nameof(LightStateChanged), context.Message);
         }
     }
 }
