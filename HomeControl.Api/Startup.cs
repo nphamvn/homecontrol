@@ -68,7 +68,7 @@ namespace HomeControl.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<LightHub>("/light");
+                endpoints.MapHub<DevicesControllerHub>("/devicescontrol");
                 endpoints.MapControllers();
             });
         }
