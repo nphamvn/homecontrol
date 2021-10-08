@@ -82,6 +82,7 @@ namespace HomeControl.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<DevicesControllerHub>("/devicescontrol");
+                endpoints.MapHub<NotificationHub>("/notification");
                 endpoints.MapControllers();
             });
         }
