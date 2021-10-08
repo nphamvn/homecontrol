@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using HomeControl.Api.EventHandlers;
 using HomeControl.Api.DenpendencyInjections;
+using HomeControl.Api.Workers;
 
 namespace HomeControl.Api
 {
@@ -30,8 +31,14 @@ namespace HomeControl.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
+            //Add Controllers
             services.AddControllers();
 
+            //Add Background Services
+            services.AddHostedService<EnvironmentSensorWorker>();
+
+            //Add CORS
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder
@@ -44,8 +51,10 @@ namespace HomeControl.Api
             //Register gRPC clients
             services.AddGrpcClients();
 
+            //Add MassTransit
             services.AddMassTransit();
 
+            //Add Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HomeControl.Api", Version = "v1" });

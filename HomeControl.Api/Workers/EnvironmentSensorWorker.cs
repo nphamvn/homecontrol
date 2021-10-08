@@ -28,8 +28,13 @@ namespace HomeControl.Api.Workers
             {
                 while (true)
                 {
-                    var newValue = await _client.GetSensorDataAsync(new Google.Protobuf.WellKnownTypes.Empty());
-
+                    //var newValue = await _client.GetSensorDataAsync(new Google.Protobuf.WellKnownTypes.Empty());
+                    _logger.LogInformation(nameof(EnvironmentSensorWorker) + " running");
+                    var newValue = new EnvironmentSensorReply
+                    {
+                        Temperature = new System.Random().Next(20, 40),
+                        Humindity = 80
+                    };
                     if (lastValue != null)
                     {
                         if (true)
@@ -46,7 +51,7 @@ namespace HomeControl.Api.Workers
                     }
                     lastValue = newValue;
 
-                    await Task.Delay(10000, stoppingToken);
+                    await Task.Delay(2000, stoppingToken);
                 }
             }
             catch (System.Exception)
