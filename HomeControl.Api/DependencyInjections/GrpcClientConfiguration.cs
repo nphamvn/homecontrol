@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using HomeControl.Api.EventHandlers;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,13 @@ namespace HomeControl.Api.DenpendencyInjections
             services.AddGrpcClient<Light.LightClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                return httpHandler;
             });
             services.AddGrpcClient<AirConditioner.AirConditionerClient>(o =>
             {
@@ -37,7 +45,7 @@ namespace HomeControl.Api.DenpendencyInjections
                 });
 
             });
-            
+
             services.AddMassTransitHostedService(true);
         }
     }

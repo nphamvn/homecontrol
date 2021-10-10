@@ -29,7 +29,7 @@ namespace HomeControl.Api.Workers
                 while (true)
                 {
                     //var newValue = await _client.GetSensorDataAsync(new Google.Protobuf.WellKnownTypes.Empty());
-                    _logger.LogInformation(nameof(EnvironmentSensorWorker) + " running");
+                    //_logger.LogInformation(nameof(EnvironmentSensorWorker) + " running");
                     var newValue = new EnvironmentSensorReply
                     {
                         Temperature = new System.Random().Next(20, 40),

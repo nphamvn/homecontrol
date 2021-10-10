@@ -45,7 +45,12 @@ namespace HomeControl.Api
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("http://localhost:4200");
+                .WithOrigins("http://localhost:4200","http://localhost:4201");
+
+                // builder.WithOrigins("https://nphamvn.github.io/", "https://homecontrol-fe.azurewebsites.net", "http://localhost:4200")
+                // .AllowAnyHeader()
+                // .WithMethods("GET", "POST")
+                // .AllowCredentials();
             }));
 
             //Register gRPC clients
@@ -78,6 +83,8 @@ namespace HomeControl.Api
             app.UseAuthorization();
 
             app.UseCors("CorsPolicy");
+
+            //app.UseWebSockets();
 
             app.UseEndpoints(endpoints =>
             {
