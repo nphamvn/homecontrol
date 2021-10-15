@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using HomeControl.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeControl.Api.Controllers
@@ -9,7 +10,11 @@ namespace HomeControl.Api.Controllers
     {
         public async Task<IActionResult> Test()
         {
-            return Ok("OK");
+            return Ok(new RequestResponse<string>
+            {
+                Success = true,
+                Data = "Test sucessful"
+            });
         }
     }
 }
